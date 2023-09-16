@@ -1,0 +1,44 @@
+{% extends "attendance/base.html" %}
+
+{% block content %}
+
+<table class="table table-hover table-borderless mt-3" style="font-size: 12px;">
+  <thead>
+    <tr class="text-center">
+      <th scope="col">ID Number</th>
+      <th scope="col">Fullname</th>
+      <th scope="col">Year Level</th>
+      <th scope="col">College</th>
+      <th scope="col">Course</th>
+      <th scope="col">Major</th>
+      <th scope="col">
+        <a href="{% url 'insert' %}">
+          <button type="button" class="btn" style="color: teal;"><i class="fa-solid fa-square-plus fa-lg"></i></button>
+        </a>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for participant in participant_list %}
+    <tr class="table-warning text-center border-bottom">
+      <td>{{participant.student_num}}</td>
+      <td>{{participant.fullname}}</td>
+      <td>{{participant.year}}</td>
+      <td>{{participant.college}}</td>
+      <td>{{participant.course}}</td>
+      <td>{{participant.major}}</td>
+      <td>
+        <a href="{% url 'update' participant.num %}" class="btn text-success px-0"><i class="far fa-edit"></i></a>
+          
+        <form action="{% url 'delete' participant.num %}" method="POST" class="d-inline">
+          {% csrf_token %}
+          <button type="submit" class="btn"><i class="far fa-trash-alt text-danger float-right"></i></button>
+        </form>
+      </td>
+    {% endfor %}
+    </tr>
+  </tbody>
+</table>
+
+{% endblock content %}
